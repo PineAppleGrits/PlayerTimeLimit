@@ -13,9 +13,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.aikar.idb.DB;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -24,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ptl.ajneb97.api.ExpansionPlayerTimeLimit;
 import ptl.ajneb97.api.PlayerTimeLimitAPI;
 import ptl.ajneb97.configs.ConfigsManager;
+import dev.grits.database.DatabaseAPI;
 import ptl.ajneb97.listeners.PlayerListener;
 import ptl.ajneb97.managers.MensajesManager;
 import ptl.ajneb97.managers.PlayerManager;
@@ -48,17 +49,23 @@ public class PlayerTimeLimit extends JavaPlugin {
 	private ServerManager serverManager;
 	
 	private DataSaveTask dataSaveTask;
-	
+
+	private DatabaseAPI databaseAPI;
 	public static String nombrePlugin = ChatColor.translateAlternateColorCodes('&', "&8[&bPlayerTime&cLimit&8] ");
 	
 	public void onEnable(){
+
 	   this.playerManager = new PlayerManager(this);
 	   this.serverManager = new ServerManager(this);
 	   registerEvents();
 	   registerCommands();
 	   registerConfig();
 	   this.configsManager = new ConfigsManager(this);
-	   this.configsManager.configurar();
+       this.configsManager.configurar();
+	   this.databaseAPI = new DatabaseAPI(this);
+	   this.databaseAPI.initDB();
+	   this.configsManager.initPlayerConfigsManager();
+
 	   
 	   serverManager.executeDataTime();
 	   
@@ -83,7 +90,9 @@ public class PlayerTimeLimit extends JavaPlugin {
 	  
 	public void onDisable(){
 		this.configsManager.getPlayerConfigsManager().guardarJugadores();
+		this.getDB().savePlayersTime();
 		serverManager.saveDataTime();
+		DB.close();
 		Bukkit.getConsoleSender().sendMessage(nombrePlugin+ChatColor.YELLOW + "Has been disabled! " + ChatColor.WHITE + "Version: " + version);
 	}
 	public void registerCommands(){
@@ -107,9 +116,10 @@ public class PlayerTimeLimit extends JavaPlugin {
 	public void recargarConfigs() {
 		this.configsManager.getMensajesConfigManager().reloadMessages();
 		this.configsManager.getPlayerConfigsManager().guardarJugadores();
+		this.getDB().savePlayersTime();
 		reloadConfig();
 		this.configsManager.getMainConfigManager().configurar();
-		
+		this.databaseAPI.reloadDB();
 		recargarDataSaveTask();
 	}
 	
@@ -121,6 +131,9 @@ public class PlayerTimeLimit extends JavaPlugin {
 		dataSaveTask.start(getConfig().getInt("data_save_time"));
 	}
 
+	public DatabaseAPI getDB(){
+		return this.databaseAPI;
+	}
 	public PlayerManager getPlayerManager() {
 		return playerManager;
 	}

@@ -18,6 +18,13 @@ boss_bar:
   enabled: true
   color: RED
   style: SEGMENTED_10
+mysql:
+  enable: true
+  username: "root"
+  password: "root"
+  host: "localhost"
+  port: 3306
+  database: "ptl_db"
 notification:
   60:
     message:

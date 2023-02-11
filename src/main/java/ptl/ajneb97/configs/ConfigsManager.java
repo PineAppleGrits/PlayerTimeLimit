@@ -16,10 +16,8 @@ public class ConfigsManager {
 	
 	public void configurar() {
 		this.mainConfigManager.configurar();
-		this.playerConfigsManager.configurar();
 		this.mensajesConfigManager.configurar();
 	}
-
 	public MensajesConfigManager getMensajesConfigManager() {
 		return mensajesConfigManager;
 	}
@@ -30,6 +28,10 @@ public class ConfigsManager {
 
 	public MainConfigManager getMainConfigManager() {
 		return mainConfigManager;
+	}
+
+	public void initPlayerConfigsManager(){
+		this.playerConfigsManager.configurar();
 	}
 
 	

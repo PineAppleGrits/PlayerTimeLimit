@@ -11,7 +11,6 @@ public class TimeLimitPlayer {
 	private int currentTime; //El tiempo que lleva en el dia y sin reiniciarse
 	private int totalTime; //El tiempo que ha jugado el jugador por siempre
 	private boolean messageEnabled;
-	
 	private BossBar bossBar;
 	
 	public TimeLimitPlayer(String uuid, String name) {
@@ -70,13 +69,12 @@ public class TimeLimitPlayer {
 		this.bossBar = bossBar;
 	}
 	public void eliminarBossBar() {
-		if(bossBar != null) {
+		if (bossBar != null) {
 			bossBar.removeAll();
 			bossBar.setVisible(false);
 			bossBar = null;
 		}
 	}
-	
 	public void resetTime() {
 		this.setCurrentTime(0);
 	}

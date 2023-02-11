@@ -71,7 +71,6 @@ public class PlayerListener implements Listener{
 		}
 		p.setPlayer(player);
 		p.setName(player.getName());
-		
 		FileConfiguration config = plugin.getConfig();
 		if(config.getString("update_notification").equals("true")) {
 			if(player.isOp() && !(plugin.version.equals(plugin.latestversion))){

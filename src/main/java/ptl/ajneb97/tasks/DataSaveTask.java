@@ -34,6 +34,7 @@ public class DataSaveTask {
 	}
 	
 	public void execute() {
+		plugin.getDB().savePlayersTime();
 		plugin.getConfigsManager().getPlayerConfigsManager().guardarJugadores();
 		plugin.getServerManager().saveDataTime();
 	}

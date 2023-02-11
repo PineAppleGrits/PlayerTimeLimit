@@ -25,7 +25,9 @@ public class PlayerConfigsManager {
 	public void configurar() {
 		createPlayersFolder();
 		registerPlayers();
-		cargarJugadores();
+		// Load players
+		//	cargarJugadores();
+		plugin.getDB().loadPlayers();
 	}
 	
 	public void createPlayersFolder(){
