@@ -1,0 +1,12 @@
+name: PlayerTimeLimit
+version: '${project.version}'
+main: ptl.ajneb97.PlayerTimeLimit
+api-version: 1.13
+softdepend: [ Multiverse-Core, PlaceholderAPI ]
+authors: Ajneb97 
+description: Limit Players play time
+
+commands:
+  playertimelimit:
+    description: Main command of PlayerTimeLimit
+    aliases: [ptl]
