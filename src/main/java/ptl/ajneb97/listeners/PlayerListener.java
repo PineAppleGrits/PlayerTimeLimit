@@ -1,9 +1,5 @@
 package ptl.ajneb97.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,13 +13,13 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-
 import ptl.ajneb97.PlayerTimeLimit;
 import ptl.ajneb97.configs.MainConfigManager;
-import ptl.ajneb97.configs.others.TimeLimit;
 import ptl.ajneb97.managers.MensajesManager;
 import ptl.ajneb97.managers.PlayerManager;
 import ptl.ajneb97.model.TimeLimitPlayer;
+
+import java.util.List;
 
 public class PlayerListener implements Listener{
 

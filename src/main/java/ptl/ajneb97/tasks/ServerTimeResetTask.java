@@ -1,15 +1,11 @@
 package ptl.ajneb97.tasks;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
-
 import ptl.ajneb97.PlayerTimeLimit;
 import ptl.ajneb97.configs.MainConfigManager;
-import ptl.ajneb97.model.TimeLimitPlayer;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ServerTimeResetTask {
 

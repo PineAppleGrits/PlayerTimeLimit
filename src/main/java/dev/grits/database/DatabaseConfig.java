@@ -1,7 +1,5 @@
 package dev.grits.database;
 
-import java.util.List;
-
 public class DatabaseConfig {
     public DatabaseConfig(String username, String password, String host, String port, String database) {
         super();

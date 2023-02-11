@@ -1,16 +1,11 @@
 package ptl.ajneb97.configs;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
-
 import ptl.ajneb97.PlayerTimeLimit;
 import ptl.ajneb97.model.TimeLimitPlayer;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class PlayerConfigsManager {
 	

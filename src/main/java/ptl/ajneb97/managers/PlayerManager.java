@@ -1,22 +1,19 @@
 package ptl.ajneb97.managers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
 import ptl.ajneb97.PlayerTimeLimit;
 import ptl.ajneb97.configs.MainConfigManager;
 import ptl.ajneb97.configs.others.TimeLimit;
 import ptl.ajneb97.model.TimeLimitPlayer;
 import ptl.ajneb97.utils.UtilsTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerManager {
 
