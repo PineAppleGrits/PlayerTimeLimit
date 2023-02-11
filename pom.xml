@@ -6,7 +6,7 @@
 
     <groupId>ptl.ajneb97</groupId>
     <artifactId>ptl</artifactId>
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <packaging>jar</packaging>
 
     <name>PlayerTimeLimit</name>
