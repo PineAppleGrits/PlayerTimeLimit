@@ -87,8 +87,9 @@ public class PlayerTimeLimit extends JavaPlugin {
     }
 
     public void onDisable() {
-        this.configsManager.getPlayerConfigsManager().guardarJugadores();
-        this.getDB().savePlayersTime();
+        if (this.getDB().isEnabled()) this.getDB().savePlayersTime();
+        else this.configsManager.getPlayerConfigsManager().guardarJugadores();
+
         serverManager.saveDataTime();
         DB.close();
         Bukkit.getConsoleSender().sendMessage(nombrePlugin + ChatColor.YELLOW + "Has been disabled! " + ChatColor.WHITE + "Version: " + version);
@@ -114,8 +115,8 @@ public class PlayerTimeLimit extends JavaPlugin {
 
     public void recargarConfigs() {
         this.configsManager.getMensajesConfigManager().reloadMessages();
-        this.configsManager.getPlayerConfigsManager().guardarJugadores();
-        this.getDB().savePlayersTime();
+        if (this.getDB().isEnabled()) this.getDB().savePlayersTime();
+        else this.configsManager.getPlayerConfigsManager().guardarJugadores();
         reloadConfig();
         this.configsManager.getMainConfigManager().configurar();
         this.databaseAPI.reloadDB();

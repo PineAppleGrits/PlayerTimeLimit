@@ -52,6 +52,7 @@ public class MainConfigManager {
         ConfigurationSection dbCfg = config.getConfigurationSection("mysql");
 
         databaseConfig = new DatabaseConfig(
+                dbCfg.getBoolean("enabled"),
                 dbCfg.getString("username"),
                 dbCfg.getString("password"),
                 dbCfg.getString("host"),

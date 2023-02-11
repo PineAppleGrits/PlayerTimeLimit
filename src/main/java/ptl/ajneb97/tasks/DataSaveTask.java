@@ -12,14 +12,14 @@ public class DataSaveTask {
 		this.plugin = plugin;
 		this.end = false;
 	}
-	
+
 	public void end() {
 		end = true;
 	}
-	
+
 	public void start(int minutes) {
 		long ticks = minutes*60*20;
-		
+
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -29,13 +29,13 @@ public class DataSaveTask {
 					execute();
 				}
 			}
-			
+
 		}.runTaskTimerAsynchronously(plugin, 0L, ticks);
 	}
-	
+
 	public void execute() {
-		plugin.getDB().savePlayersTime();
-		plugin.getConfigsManager().getPlayerConfigsManager().guardarJugadores();
+		if(plugin.getDB().isEnabled()) plugin.getDB().savePlayersTime();
+        else plugin.getConfigsManager().getPlayerConfigsManager().guardarJugadores();
 		plugin.getServerManager().saveDataTime();
 	}
 }

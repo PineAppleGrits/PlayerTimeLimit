@@ -8,23 +8,23 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class PlayerConfigsManager {
-	
+
 	private ArrayList<PlayerConfig> configPlayers;
 	private PlayerTimeLimit plugin;
-	
+
 	public PlayerConfigsManager(PlayerTimeLimit plugin) {
 		this.plugin = plugin;
 		this.configPlayers = new ArrayList<PlayerConfig>();
 	}
-	
+
 	public void configurar() {
 		createPlayersFolder();
 		registerPlayers();
-		// Load players
-		//	cargarJugadores();
-		plugin.getDB().loadPlayers();
+		if(plugin.getDB().isEnabled())
+			plugin.getDB().loadPlayers();
+		else cargarJugadores();
 	}
-	
+
 	public void createPlayersFolder(){
 		File folder;
         try {
@@ -36,13 +36,13 @@ public class PlayerConfigsManager {
             folder = null;
         }
 	}
-	
+
 	public void savePlayers() {
 		for(int i=0;i<configPlayers.size();i++) {
 			configPlayers.get(i).savePlayerConfig();
 		}
 	}
-	
+
 	public void registerPlayers(){
 		String path = plugin.getDataFolder() + File.separator + "players";
 		File folder = new File(path);
@@ -56,11 +56,11 @@ public class PlayerConfigsManager {
 		    }
 		}
 	}
-	
+
 	public ArrayList<PlayerConfig> getConfigPlayers(){
 		return this.configPlayers;
 	}
-	
+
 	public boolean archivoYaRegistrado(String pathName) {
 		for(int i=0;i<configPlayers.size();i++) {
 			if(configPlayers.get(i).getPath().equals(pathName)) {
@@ -69,7 +69,7 @@ public class PlayerConfigsManager {
 		}
 		return false;
 	}
-	
+
 	public PlayerConfig getPlayerConfig(String pathName) {
 		for(int i=0;i<configPlayers.size();i++) {
 			if(configPlayers.get(i).getPath().equals(pathName)) {
@@ -78,11 +78,11 @@ public class PlayerConfigsManager {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<PlayerConfig> getPlayerConfigs() {
 		return this.configPlayers;
 	}
-	
+
 	public boolean registerPlayer(String pathName) {
 		if(!archivoYaRegistrado(pathName)) {
 			PlayerConfig config = new PlayerConfig(pathName,plugin);
@@ -93,7 +93,7 @@ public class PlayerConfigsManager {
 			return false;
 		}
 	}
-	
+
 	public void removerConfigPlayer(String path) {
 		for(int i=0;i<configPlayers.size();i++) {
 			if(configPlayers.get(i).getPath().equals(path)) {
@@ -101,26 +101,26 @@ public class PlayerConfigsManager {
 			}
 		}
 	}
-	
+
 	public void cargarJugadores() {
 		ArrayList<TimeLimitPlayer> jugadores = new ArrayList<TimeLimitPlayer>();
-		
+
 		for(PlayerConfig playerConfig : configPlayers) {
 			FileConfiguration players = playerConfig.getConfig();
 			String name = players.getString("name");
 			String uuid = playerConfig.getPath().replace(".yml", "");
-			
+
 			TimeLimitPlayer p = new TimeLimitPlayer(uuid,name);
-			
+
 			p.setCurrentTime(players.getInt("current_time"));
 			p.setTotalTime(players.getInt("total_time"));
 			p.setMessageEnabled(players.getBoolean("messages"));
-			
+
 			jugadores.add(p);
 		}
 		plugin.getPlayerManager().setPlayers(jugadores);
 	}
-	
+
 	public void guardarJugadores() {
 		for(TimeLimitPlayer player : plugin.getPlayerManager().getPlayers()) {
 			String jugador = player.getName();
@@ -130,7 +130,7 @@ public class PlayerConfigsManager {
 				playerConfig = getPlayerConfig(player.getUuid()+".yml");
 			}
 			FileConfiguration players = playerConfig.getConfig();
-			
+
 			players.set("name", jugador);
 			players.set("current_time", player.getCurrentTime());
 			players.set("total_time", player.getTotalTime());

@@ -46,20 +46,17 @@ public class DatabaseAPI {
 
     public void insertPlayers(List<TimeLimitPlayer> playersTime) {
         String STATEMENT = String.format(STATEMENT_INSERT_PLAYERS, playersTime.stream().map(ptl -> INSERT_WILDCARD).collect(Collectors.joining(",")));
-        if(playersTime.size() < 1) return;
+        if (playersTime.size() < 1) return;
         List<Object> values = new ArrayList<>();
         for (TimeLimitPlayer ptl : playersTime) {
-            values.addAll(Arrays.asList(ptl.getUuid().toString(), ptl.getName(), ptl.getCurrentTime(), ptl.getTotalTime(),ptl.isMessageEnabled()));
+            values.addAll(Arrays.asList(ptl.getUuid().toString(), ptl.getName(), ptl.getCurrentTime(), ptl.getTotalTime(), ptl.isMessageEnabled()));
         }
-        try {
-            plugin.getLogger().info(STATEMENT);
-            DB.executeUpdate(STATEMENT, values.toArray());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        DB.executeUpdateAsync(STATEMENT, values.toArray());
+
     }
 
     public void initDB() {
+        if (!isEnabled()) return;
         DatabaseConfig dbCfg = plugin.getConfigsManager().getMainConfigManager().getDatabaseConfig();
         DatabaseOptions options = DatabaseOptions.builder()
                 .mysql(dbCfg.getUsername(), dbCfg.getPassword(), dbCfg.getDatabase(), dbCfg.getHostAndPort())
@@ -98,9 +95,18 @@ public class DatabaseAPI {
 
     }
 
+    public boolean isEnabled() {
+        DatabaseConfig dbCfg = plugin.getConfigsManager().getMainConfigManager().getDatabaseConfig();
+        return dbCfg.getEnabled();
+    }
+
     public void reloadDB() {
-        DB.close();
+        close();
         initDB();
+    }
+
+    public void close() {
+        if (isEnabled()) DB.close();
     }
 
 }
